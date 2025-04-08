@@ -1,0 +1,21 @@
+#foreach($order in $orders)
+  #set($itemSignatures = [])
+
+  #foreach($item in $order.items)
+    #set($entry = "${item.name}:${item.quantity}:${item.price}")
+    #set($void = $itemSignatures.add($entry))
+  #end
+
+  #set($sortedItems = $itemSignatures.sort())
+
+  #set($groupKey = "")
+  #foreach($entry in $sortedItems)
+    #if($foreach.count == 1)
+      #set($groupKey = "$entry")
+    #else
+      #set($groupKey = "$groupKey|$entry")
+    #end
+  #end
+
+  #set($order.group = $groupKey)
+#end
